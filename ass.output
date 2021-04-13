@@ -1,0 +1,406 @@
+Terminals unused in grammar
+
+   QUIT
+
+
+Grammar
+
+    0 $accept: operation $end
+
+    1 operation: operation MOVES NEWLINE
+    2          | operation ASSIGNMENT FULLSTOP NEWLINE
+    3          | operation NAMING FULLSTOP NEWLINE
+    4          | operation QUERY FULLSTOP NEWLINE
+    5          | NEWLINE
+    6          | %empty
+
+    7 MOVES: ARITHMETIC DIRECTION FULLSTOP
+
+    8 ARITHMETIC: ADD
+    9           | SUB
+   10           | MUL
+   11           | DIV
+
+   12 DIRECTION: UP
+   13          | DOWN
+   14          | LEFT
+   15          | RIGHT
+
+   16 ASSIGNMENT: ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE
+
+   17 NAMING: VAR VARNAME IS INTVALUE COMMA INTVALUE
+
+   18 QUERY: VALUE IN INTVALUE COMMA INTVALUE
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ADD (258) 8
+LEFT (259) 14
+RIGHT (260) 15
+UP (261) 12
+DOWN (262) 13
+SUB (263) 9
+MUL (264) 10
+DIV (265) 11
+COMMA (266) 16 17 18
+NEWLINE (267) 1 2 3 4 5
+QUIT (268)
+ASSIGN (269) 16
+TO (270) 16
+VALUE (271) 18
+IN (272) 18
+IS (273) 17
+VAR (274) 17
+FULLSTOP (275) 2 3 4 7
+INTVALUE (276) 16 17 18
+VARNAME (277) 17
+
+
+Nonterminals, with rules where they appear
+
+$accept (23)
+    on left: 0
+operation (24)
+    on left: 1 2 3 4 5 6, on right: 0 1 2 3 4
+MOVES (25)
+    on left: 7, on right: 1
+ARITHMETIC (26)
+    on left: 8 9 10 11, on right: 7
+DIRECTION (27)
+    on left: 12 13 14 15, on right: 7
+ASSIGNMENT (28)
+    on left: 16, on right: 2
+NAMING (29)
+    on left: 17, on right: 3
+QUERY (30)
+    on left: 18, on right: 4
+
+
+State 0
+
+    0 $accept: . operation $end
+
+    NEWLINE  shift, and go to state 1
+
+    $default  reduce using rule 6 (operation)
+
+    operation  go to state 2
+
+
+State 1
+
+    5 operation: NEWLINE .
+
+    $default  reduce using rule 5 (operation)
+
+
+State 2
+
+    0 $accept: operation . $end
+    1 operation: operation . MOVES NEWLINE
+    2          | operation . ASSIGNMENT FULLSTOP NEWLINE
+    3          | operation . NAMING FULLSTOP NEWLINE
+    4          | operation . QUERY FULLSTOP NEWLINE
+
+    $end    shift, and go to state 3
+    ADD     shift, and go to state 4
+    SUB     shift, and go to state 5
+    MUL     shift, and go to state 6
+    DIV     shift, and go to state 7
+    ASSIGN  shift, and go to state 8
+    VALUE   shift, and go to state 9
+    VAR     shift, and go to state 10
+
+    MOVES       go to state 11
+    ARITHMETIC  go to state 12
+    ASSIGNMENT  go to state 13
+    NAMING      go to state 14
+    QUERY       go to state 15
+
+
+State 3
+
+    0 $accept: operation $end .
+
+    $default  accept
+
+
+State 4
+
+    8 ARITHMETIC: ADD .
+
+    $default  reduce using rule 8 (ARITHMETIC)
+
+
+State 5
+
+    9 ARITHMETIC: SUB .
+
+    $default  reduce using rule 9 (ARITHMETIC)
+
+
+State 6
+
+   10 ARITHMETIC: MUL .
+
+    $default  reduce using rule 10 (ARITHMETIC)
+
+
+State 7
+
+   11 ARITHMETIC: DIV .
+
+    $default  reduce using rule 11 (ARITHMETIC)
+
+
+State 8
+
+   16 ASSIGNMENT: ASSIGN . INTVALUE TO INTVALUE COMMA INTVALUE
+
+    INTVALUE  shift, and go to state 16
+
+
+State 9
+
+   18 QUERY: VALUE . IN INTVALUE COMMA INTVALUE
+
+    IN  shift, and go to state 17
+
+
+State 10
+
+   17 NAMING: VAR . VARNAME IS INTVALUE COMMA INTVALUE
+
+    VARNAME  shift, and go to state 18
+
+
+State 11
+
+    1 operation: operation MOVES . NEWLINE
+
+    NEWLINE  shift, and go to state 19
+
+
+State 12
+
+    7 MOVES: ARITHMETIC . DIRECTION FULLSTOP
+
+    LEFT   shift, and go to state 20
+    RIGHT  shift, and go to state 21
+    UP     shift, and go to state 22
+    DOWN   shift, and go to state 23
+
+    DIRECTION  go to state 24
+
+
+State 13
+
+    2 operation: operation ASSIGNMENT . FULLSTOP NEWLINE
+
+    FULLSTOP  shift, and go to state 25
+
+
+State 14
+
+    3 operation: operation NAMING . FULLSTOP NEWLINE
+
+    FULLSTOP  shift, and go to state 26
+
+
+State 15
+
+    4 operation: operation QUERY . FULLSTOP NEWLINE
+
+    FULLSTOP  shift, and go to state 27
+
+
+State 16
+
+   16 ASSIGNMENT: ASSIGN INTVALUE . TO INTVALUE COMMA INTVALUE
+
+    TO  shift, and go to state 28
+
+
+State 17
+
+   18 QUERY: VALUE IN . INTVALUE COMMA INTVALUE
+
+    INTVALUE  shift, and go to state 29
+
+
+State 18
+
+   17 NAMING: VAR VARNAME . IS INTVALUE COMMA INTVALUE
+
+    IS  shift, and go to state 30
+
+
+State 19
+
+    1 operation: operation MOVES NEWLINE .
+
+    $default  reduce using rule 1 (operation)
+
+
+State 20
+
+   14 DIRECTION: LEFT .
+
+    $default  reduce using rule 14 (DIRECTION)
+
+
+State 21
+
+   15 DIRECTION: RIGHT .
+
+    $default  reduce using rule 15 (DIRECTION)
+
+
+State 22
+
+   12 DIRECTION: UP .
+
+    $default  reduce using rule 12 (DIRECTION)
+
+
+State 23
+
+   13 DIRECTION: DOWN .
+
+    $default  reduce using rule 13 (DIRECTION)
+
+
+State 24
+
+    7 MOVES: ARITHMETIC DIRECTION . FULLSTOP
+
+    FULLSTOP  shift, and go to state 31
+
+
+State 25
+
+    2 operation: operation ASSIGNMENT FULLSTOP . NEWLINE
+
+    NEWLINE  shift, and go to state 32
+
+
+State 26
+
+    3 operation: operation NAMING FULLSTOP . NEWLINE
+
+    NEWLINE  shift, and go to state 33
+
+
+State 27
+
+    4 operation: operation QUERY FULLSTOP . NEWLINE
+
+    NEWLINE  shift, and go to state 34
+
+
+State 28
+
+   16 ASSIGNMENT: ASSIGN INTVALUE TO . INTVALUE COMMA INTVALUE
+
+    INTVALUE  shift, and go to state 35
+
+
+State 29
+
+   18 QUERY: VALUE IN INTVALUE . COMMA INTVALUE
+
+    COMMA  shift, and go to state 36
+
+
+State 30
+
+   17 NAMING: VAR VARNAME IS . INTVALUE COMMA INTVALUE
+
+    INTVALUE  shift, and go to state 37
+
+
+State 31
+
+    7 MOVES: ARITHMETIC DIRECTION FULLSTOP .
+
+    $default  reduce using rule 7 (MOVES)
+
+
+State 32
+
+    2 operation: operation ASSIGNMENT FULLSTOP NEWLINE .
+
+    $default  reduce using rule 2 (operation)
+
+
+State 33
+
+    3 operation: operation NAMING FULLSTOP NEWLINE .
+
+    $default  reduce using rule 3 (operation)
+
+
+State 34
+
+    4 operation: operation QUERY FULLSTOP NEWLINE .
+
+    $default  reduce using rule 4 (operation)
+
+
+State 35
+
+   16 ASSIGNMENT: ASSIGN INTVALUE TO INTVALUE . COMMA INTVALUE
+
+    COMMA  shift, and go to state 38
+
+
+State 36
+
+   18 QUERY: VALUE IN INTVALUE COMMA . INTVALUE
+
+    INTVALUE  shift, and go to state 39
+
+
+State 37
+
+   17 NAMING: VAR VARNAME IS INTVALUE . COMMA INTVALUE
+
+    COMMA  shift, and go to state 40
+
+
+State 38
+
+   16 ASSIGNMENT: ASSIGN INTVALUE TO INTVALUE COMMA . INTVALUE
+
+    INTVALUE  shift, and go to state 41
+
+
+State 39
+
+   18 QUERY: VALUE IN INTVALUE COMMA INTVALUE .
+
+    $default  reduce using rule 18 (QUERY)
+
+
+State 40
+
+   17 NAMING: VAR VARNAME IS INTVALUE COMMA . INTVALUE
+
+    INTVALUE  shift, and go to state 42
+
+
+State 41
+
+   16 ASSIGNMENT: ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE .
+
+    $default  reduce using rule 16 (ASSIGNMENT)
+
+
+State 42
+
+   17 NAMING: VAR VARNAME IS INTVALUE COMMA INTVALUE .
+
+    $default  reduce using rule 17 (NAMING)
