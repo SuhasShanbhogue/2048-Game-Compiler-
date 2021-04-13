@@ -60,6 +60,16 @@ void value_in(int row, int col)
 	printf("Value in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
 }
 
+void assign_value(int val, int row, int col)
+{
+	if(row>4 || col>4 || row<1 || col <1)
+	{
+		printf("There is no tile like that. The tile co-ordinates must be in the range 1,2,3,4.\n");
+		return;
+	}
+	board.board[row-1][col-1]=val;
+}
+
 void move(int insertRandom, int direction, int operation){
 	/*
 		If direction = 

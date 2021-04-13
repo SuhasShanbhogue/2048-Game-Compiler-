@@ -57,7 +57,9 @@ DIRECTION : UP {$$ = $1;}
 	;
 
 
-ASSIGNMENT : ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE {printf("%d,%d,%d",$2,$4,$6);}
+ASSIGNMENT : ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE {printf("%d,%d,%d\n",$2,$4,$6);
+														assign_value($2, $4, $6);
+														printBoard();}
 	;
 
 
