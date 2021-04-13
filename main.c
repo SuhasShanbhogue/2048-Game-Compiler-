@@ -55,6 +55,11 @@ void printBoard(){
 	}
 }
 
+void value_in(int row, int col)
+{
+	printf("Value in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
+}
+
 void move(int insertRandom, int direction, int operation){
 	/*
 		If direction = 
