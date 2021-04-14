@@ -61,7 +61,7 @@ void printBoard(){
 
 void value_in(int row, int col)
 {
-	printf("Value in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
+	printf("Number in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
 	printf("names of %d, %d are:\n", row, col);
 	printList(board_names[row-1][col-1]);
 }
@@ -127,33 +127,51 @@ void moveLeft(int insertRandom, int operation){
 	int i,j;
 	for(i=0; i<4; i++){
 		int temp[4];
+		Node* temp_nodes[4]; //for varnames
 		int tempIdx=0;
 		for(j=0; j<4; j++){
 			if((board.board)[i][j] != 0){
 				temp[tempIdx] = (board.board)[i][j];
+				temp_nodes[tempIdx]=board_names[i][j]; //for varnames
 				tempIdx++;
 			}
 		}
 		int temp2[4];
+		Node* temp2_nodes[4]; //for varnames
 		int temp2Idx = 0;
 		int k = 0;
 		while(k < tempIdx){
 			if(k < tempIdx - 1){
 				if(temp[k] == temp[k+1]){
 					// temp2[temp2Idx] = temp[k]*2;
-					if(operation == 1){	temp2[temp2Idx] = temp[k]*2; }
-					else if(operation == 2){ temp2[temp2Idx] = 0; }
-					else if(operation == 3){ temp2[temp2Idx]  = temp[k]*temp[k];}
-					else{temp2[temp2Idx] = 1;}
+					if(operation == 1){	temp2[temp2Idx] = temp[k]*2; 
+										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
+										move_list(temp2_nodes[temp2Idx], temp_nodes[k+1]); //for varnames
+										}
+					else if(operation == 2){ temp2[temp2Idx] = 0; 
+										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
+										make_list_zero(temp2_nodes[temp2Idx]); //for varnames
+										}
+					else if(operation == 3){ temp2[temp2Idx]  = temp[k]*temp[k];
+										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
+										move_list(temp2_nodes[temp2Idx], temp_nodes[k+1]); //for varnames
+										}
+					else				{temp2[temp2Idx] = 1;
+										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
+										move_list(temp2_nodes[temp2Idx], temp_nodes[k+1]); //for varnames
+
+										}
 					k++;	temp2Idx++;
 				}
 				else{
 					temp2[temp2Idx] = temp[k];
+					temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
 					temp2Idx++;
 				}
 			}
 			else{
 				temp2[temp2Idx] = temp[k];
+				temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
 				temp2Idx++;
 			}
 			k++;
@@ -162,13 +180,20 @@ void moveLeft(int insertRandom, int operation){
 		for(k=0; k<4; k++){
 			if(k < temp2Idx){
 				(board.board)[i][k] = temp2[k];
+				board_names[i][k]=temp2_nodes[k];//for varnames
 			}
 			else{
 				(board.board)[i][k] = 0;
+				board_names[i][k] = (Node *)malloc(sizeof(Node)); //for varnames
+				board_names[i][k]->next=NULL; //for varnames
+				char dummy[50]="dummy_head";  //for varnames
+				strcpy(board_names[i][k]->var_name, dummy);  //for varnames
 			}
 		}
 
 	}
+
+	//Generating a Random Tile
 
 	int emptyIndexes[4][16][2];
 	int tk[4];
@@ -226,6 +251,7 @@ void rotate90(){
             (board.board)[j][4 - 1 - i] = temp;
         }
     }
+	rotateNodes90();
 }
 
 
