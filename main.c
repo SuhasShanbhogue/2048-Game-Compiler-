@@ -37,13 +37,13 @@ void initialize(){
 	}
 }
 
-void add1(){
-	for(int i=0; i<4; i++){
-		for(int j=0; j<4; j++){
-			board.board[i][j] += 1;
-		}
-	}
-}
+// void add1(){
+// 	for(int i=0; i<4; i++){
+// 		for(int j=0; j<4; j++){
+// 			board.board[i][j] += 1;
+// 		}
+// 	}
+// }
 
 
 void printBoard(){
