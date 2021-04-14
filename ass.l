@@ -23,7 +23,7 @@
 "UP"	{yylval.iint = 7; return UP;}
 "DOWN" {yylval.iint = 8; return DOWN;}
 "ASSIGN" {return ASSIGN;}
-[0-9] {yylval.iint = atoi(yytext); return INTVALUE;}
+[0-9]+ {yylval.iint = atoi(yytext); return INTVALUE;}
 "TO" {return TO;}
 "VALUE" {return VALUE;}
 "IN" {return IN;}

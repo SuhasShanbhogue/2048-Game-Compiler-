@@ -28,8 +28,11 @@ int main() {
 	yyin = stdin;
 	initialize();
 	initialize_board_names();
-
+	moveLeft(1, 1);
+	
+	printBoard();
 	do {
+		printf("2048-shell> ");
 		yyparse();
 	} while(!feof(yyin));
 
@@ -56,8 +59,9 @@ void add1(){
 
 void printBoard(){
 	for(int i=0; i<4; i++){
+		printf("|");
 		for(int j=0; j<4; j++){
-			printf("%d ", board.board[i][j]);
+			printf("%d|", board.board[i][j]);
 		}
 		printf("\n");
 	}
