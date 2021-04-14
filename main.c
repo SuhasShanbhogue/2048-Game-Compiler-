@@ -137,7 +137,7 @@ void moveLeft(int insertRandom, int operation){
 					// temp2[temp2Idx] = temp[k]*2;
 					if(operation == 1){	temp2[temp2Idx] = temp[k]*2; }
 					else if(operation == 2){ temp2[temp2Idx] = 0; }
-					else if(operation == 3){ temp2[temp2Idx]  *= temp2[temp2Idx];}
+					else if(operation == 3){ temp2[temp2Idx]  = temp[k]*temp[k];}
 					else{temp2[temp2Idx] = 1;}
 					k++;	temp2Idx++;
 				}
