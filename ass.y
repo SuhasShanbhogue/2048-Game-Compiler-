@@ -18,7 +18,7 @@ void yyerror(const char* s);
 	int iint;
 }
 %token<iint> ADD LEFT RIGHT UP DOWN  SUB MUL DIV 
-%token<iint> COMMA NEWLINE QUIT ASSIGN TO VALUE IN IS VAR FULLSTOP
+%token<iint> COMMA NEWLINE QUIT ASSIGN TO VALUE IN IS VAR FULLSTOP GARBAGE
 %token<iint> INTVALUE 
 %token<str> VARNAME 
 %type<iint> MOVES ARITHMETIC DIRECTION
@@ -27,10 +27,11 @@ void yyerror(const char* s);
 %%
 
 operation :operation MOVES NEWLINE
-	|operation ASSIGNMENT FULLSTOP NEWLINE
-	|operation NAMING FULLSTOP NEWLINE
-	|operation QUERY FULLSTOP NEWLINE
-	|NEWLINE
+	|operation ASSIGNMENT 
+	|operation NAMING 
+	|operation QUERY 
+	|operation NEWLINE
+	|operation GARBAGE {printf("syntax error");}
 	|
 
 
@@ -57,22 +58,25 @@ DIRECTION : UP {$$ = $1;}
 	;
 
 
-ASSIGNMENT : ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE {printf("%d,%d,%d\n",$2,$4,$6);
+ASSIGNMENT : ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE FULLSTOP NEWLINE {printf("%d,%d,%d\n",$2,$4,$6);
 														assign_value($2, $4, $6);
 														printBoard();}
+			|ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE NEWLINE {printf("You need to end a command with a full-stop.");}
 	;
 
 
-NAMING : VAR VARNAME IS INTVALUE COMMA INTVALUE {printf("%s,%d,%d\n",$2,$4,$6);
+NAMING : VAR VARNAME IS INTVALUE COMMA INTVALUE FULLSTOP NEWLINE {printf("%s,%d,%d\n",$2,$4,$6);
 												name_variable($2, $4, $6);
-												printBoard();
-												}
+												printBoard(); }
+		| VAR VARNAME IS INTVALUE COMMA INTVALUE NEWLINE	{printf("You need to end a command with a full-stop.");}									
+
 	;
 
-QUERY : VALUE IN INTVALUE COMMA INTVALUE {printf("%d,%d\n",$3,$5);
+QUERY : VALUE IN INTVALUE COMMA INTVALUE FULLSTOP NEWLINE {printf("%d,%d\n",$3,$5);
 											value_in($3, $5);
 											printBoard();
 											}
+		| VALUE IN INTVALUE COMMA INTVALUE  NEWLINE {printf("You need to end a command with a full-stop.");}									
 	;
 %%
 

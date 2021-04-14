@@ -23,7 +23,7 @@
 "UP"	{yylval.iint = 7; return UP;}
 "DOWN" {yylval.iint = 8; return DOWN;}
 "ASSIGN" {return ASSIGN;}
-[0-9] {yylval.iint = atoi(yytext); return INTVALUE;}
+[0-9][0-9]* {yylval.iint = atoi(yytext); return INTVALUE;}
 "TO" {return TO;}
 "VALUE" {return VALUE;}
 "IN" {return IN;}
@@ -33,7 +33,7 @@
 "exit"		{return QUIT;}
 "quit"		{return QUIT;}
 [a-zA-Z][a-zA-Z0-9]* {strcpy(yylval.str,yytext); return VARNAME;}
-
+[a-zA-Z0-9][ a-zA-Z0-9]* {return GARBAGE;}
 
 
 %%

@@ -26,6 +26,7 @@ int main() {
 	initialize_board_names();
 
 	do {
+		printf("2048>");
 		yyparse();
 	} while(!feof(yyin));
 
@@ -230,7 +231,7 @@ void moveLeft(int insertRandom, int operation){
 	int a = rand()%rowIdx;
 	int b = rand()%tk[a];
 	int k = rand()%2;
-	// printf("New in %d, %d\n", emptyIndexes[a][0], emptyIndexes[a][1]);
+	//printf("New in %d, %d\n", emptyIndexes[a][0], emptyIndexes[a][1]);
 	if(insertRandom){
 		(board.board)[emptyIndexes[a][b][0]][emptyIndexes[a][b][0]] = k==0?2:4;
 	}
