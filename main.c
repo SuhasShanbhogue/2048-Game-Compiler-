@@ -20,6 +20,8 @@ void move(int insertRandom, int direction, int operation);
 
 void moveLeft(int insertRandom, int operation);
 
+void insertRandomCell();
+	
 void rotate90();
 
 int main() {
