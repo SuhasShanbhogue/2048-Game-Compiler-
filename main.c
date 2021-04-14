@@ -150,7 +150,7 @@ void moveLeft(int insertRandom, int operation){
 										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
 										move_list(temp2_nodes[temp2Idx], temp_nodes[k+1]); //for varnames
 										}
-					else if(operation == 2){ temp2[temp2Idx] = 0; 
+					else if(operation == 2){ temp2[temp2Idx] = -7; 
 										temp2_nodes[temp2Idx]=temp_nodes[k]; //for varnames
 										make_list_zero(temp2_nodes[temp2Idx]); //for varnames
 										}
@@ -195,48 +195,41 @@ void moveLeft(int insertRandom, int operation){
 
 	}
 
-	//Generating a Random Tile
-
-	int emptyIndexes[4][16][2];
-	int tk[4];
-	int tkIdx = 0;
-	int rowIdx = 0;
-	int eIdx = 0;
-
-	for(i=0; i<4; i++){
-		int temp[4][2];
-		int tempIdx = 0;
-		eIdx = 0;
-		for(j=0; j<4; j++){
-			if((board.board)[i][j] == 0){
-				temp[tempIdx][0] = i;
-				temp[tempIdx][1] = j;
-				tempIdx++;
-			}
-			else{
-				tempIdx = 0;
-			}
-		}
-		if(tempIdx){
-			for(int k=0; k<tempIdx; k++){
-				emptyIndexes[rowIdx][eIdx][0] = temp[k][0];
-				emptyIndexes[rowIdx][eIdx][1] = temp[k][1];
-				eIdx++;
-				tk[tkIdx] = eIdx;
-			}
-			rowIdx++;
-			tkIdx++;
-		}
-	}
-
-	int a = rand()%rowIdx;
-	int b = rand()%tk[a];
-	int k = rand()%2;
-	// printf("New in %d, %d\n", emptyIndexes[a][0], emptyIndexes[a][1]);
 	if(insertRandom){
-		(board.board)[emptyIndexes[a][b][0]][emptyIndexes[a][b][0]] = k==0?2:4;
+		insertRandomCell();
+		if(operation == 2){
+			for(int i=0; i<4; i++){
+				for(int j=0; j<4; j++){
+					if((board.board)[i][j]==-7){
+						(board.board)[i][j]=0;
+					}
+				}
+			}
+		}
 	}
 	return;
+}
+
+void insertRandomCell(){
+	int X[16], Y[16], ectr=0;
+	for(int i=0; i<4; i++){
+		for(int j=0; j<4; j++){
+			if((board.board)[i][j]==0){
+				X[ectr] = i;
+				Y[ectr] = j;
+				ectr++;
+			}
+		}
+	}
+
+	int a = rand()%(ectr);
+	int b = rand()%2;
+	if(b == 0){
+		(board.board)[X[a]][Y[a]] = 2;
+	}
+	else{
+		(board.board)[X[a]][Y[a]] = 4;	
+	}
 }
 
 void rotate90(){
