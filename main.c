@@ -6,7 +6,9 @@
 
 struct Board board;
 
-Node *(board_names[4][4]);
+// Node *(board_names[4][4]);
+
+struct BoardNames board_names;
 
 void initialize();
 
@@ -63,7 +65,7 @@ void value_in(int row, int col)
 {
 	printf("Number in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
 	printf("names of %d, %d are:\n", row, col);
-	printList(board_names[row-1][col-1]);
+	printList((board_names.board_names)[row-1][col-1]);
 }
 
 void assign_value(int val, int row, int col)
@@ -132,7 +134,7 @@ void moveLeft(int insertRandom, int operation){
 		for(j=0; j<4; j++){
 			if((board.board)[i][j] != 0){
 				temp[tempIdx] = (board.board)[i][j];
-				temp_nodes[tempIdx]=board_names[i][j]; //for varnames
+				temp_nodes[tempIdx]=(board_names.board_names)[i][j]; //for varnames
 				tempIdx++;
 			}
 		}
@@ -180,14 +182,14 @@ void moveLeft(int insertRandom, int operation){
 		for(k=0; k<4; k++){
 			if(k < temp2Idx){
 				(board.board)[i][k] = temp2[k];
-				board_names[i][k]=temp2_nodes[k];//for varnames
+				(board_names.board_names)[i][k]=temp2_nodes[k];//for varnames
 			}
 			else{
 				(board.board)[i][k] = 0;
-				board_names[i][k] = (Node *)malloc(sizeof(Node)); //for varnames
-				board_names[i][k]->next=NULL; //for varnames
+				(board_names.board_names)[i][k] = (Node *)malloc(sizeof(Node)); //for varnames
+				(board_names.board_names)[i][k]->next=NULL; //for varnames
 				char dummy[50]="dummy_head";  //for varnames
-				strcpy(board_names[i][k]->var_name, dummy);  //for varnames
+				strcpy((board_names.board_names)[i][k]->var_name, dummy);  //for varnames
 			}
 		}
 
@@ -262,11 +264,11 @@ void rotateNodes90(){
  
             // Swap elements of each cycle
             // in clockwise direction
-			Node* temp=board_names[i][j];			
-            board_names[i][j] = board_names[4 - 1 - j][i];
-            board_names[4 - 1 - j][i] = board_names[4 - 1 - i][4 - 1 - j];
-            board_names[4 - 1 - i][4 - 1 - j] = board_names[j][4 - 1 - i];
-            board_names[j][4 - 1 - i] = temp;
+			Node* temp=(board_names.board_names)[i][j];			
+            (board_names.board_names)[i][j] = (board_names.board_names)[4 - 1 - j][i];
+            (board_names.board_names)[4 - 1 - j][i] = (board_names.board_names)[4 - 1 - i][4 - 1 - j];
+            (board_names.board_names)[4 - 1 - i][4 - 1 - j] = (board_names.board_names)[j][4 - 1 - i];
+            (board_names.board_names)[j][4 - 1 - i] = temp;
         }
     }
 }
@@ -278,10 +280,10 @@ void initialize_board_names()
 	for (int i = 0; i < 4; i++) {
 		for(int j=0; j<4; j++)
 		{
-			board_names[i][j] = (Node *)malloc(sizeof(Node));
-			board_names[i][j]->next=NULL;
+			(board_names.board_names)[i][j] = (Node *)malloc(sizeof(Node));
+			(board_names.board_names)[i][j]->next=NULL;
 			char dummy[50]="dummy_head";
-			strcpy(board_names[i][j]->var_name, dummy);
+			strcpy((board_names.board_names)[i][j]->var_name, dummy);
 		}
 	} 
 }
@@ -334,6 +336,6 @@ void printList(Node* head)
 void name_variable(char varname[50], int row, int col)
 {
 	//FOR VAR <<varname>> IS <<x>>,<<y>>.
-	insert_name(board_names[row-1][col-1], varname);
+	insert_name((board_names.board_names)[row-1][col-1], varname);
 
 }

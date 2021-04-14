@@ -27,6 +27,11 @@ extern void name_variable(char varname[50], int row, int col);
 struct Board{
 	int board[4][4];
 };
+
+struct BoardNames{
+    Node* board_names[4][4];
+};
+
 extern FILE* yyin;
 
 #endif
