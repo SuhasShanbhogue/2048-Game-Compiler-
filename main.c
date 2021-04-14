@@ -1,9 +1,12 @@
 #include "main.h"
 #include<stdio.h>
+#include<string.h>
 #include "ass.tab.h"
 #include<stdlib.h>
 
 struct Board board;
+
+Node *(board_names[4][4]);
 
 void initialize();
 
@@ -20,6 +23,7 @@ void rotate90();
 int main() {
 	yyin = stdin;
 	initialize();
+	initialize_board_names();
 
 	do {
 		yyparse();
@@ -58,6 +62,8 @@ void printBoard(){
 void value_in(int row, int col)
 {
 	printf("Value in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
+	printf("names of %d, %d are:\n", row, col);
+	printList(board_names[row-1][col-1]);
 }
 
 void assign_value(int val, int row, int col)
@@ -220,4 +226,87 @@ void rotate90(){
             (board.board)[j][4 - 1 - i] = temp;
         }
     }
+}
+
+void rotateNodes90(){
+	int i,j;
+	for (i = 0; i < 2; i++) {
+        for (j = i; j < 3 - i; j++) {
+ 
+            // Swap elements of each cycle
+            // in clockwise direction
+			Node* temp=board_names[i][j];			
+            board_names[i][j] = board_names[4 - 1 - j][i];
+            board_names[4 - 1 - j][i] = board_names[4 - 1 - i][4 - 1 - j];
+            board_names[4 - 1 - i][4 - 1 - j] = board_names[j][4 - 1 - i];
+            board_names[j][4 - 1 - i] = temp;
+        }
+    }
+}
+
+
+void initialize_board_names()
+{
+	//INITIALIZE 4*4 Array of pointers to Node, with dummy head
+	for (int i = 0; i < 4; i++) {
+		for(int j=0; j<4; j++)
+		{
+			board_names[i][j] = (Node *)malloc(sizeof(Node));
+			board_names[i][j]->next=NULL;
+			char dummy[50]="dummy_head";
+			strcpy(board_names[i][j]->var_name, dummy);
+		}
+	} 
+}
+
+void insert_name(Node *head, char new_name[50])
+{
+	//insert variable name given by user at the end of linked list
+	Node *newNode;
+	newNode = malloc(sizeof(Node));
+	strcpy(newNode->var_name, new_name);
+	newNode->next = NULL;
+
+	Node *temp = head;
+	while(temp->next != NULL){
+	temp = temp->next;
+	}
+
+	temp->next = newNode;	
+}
+
+void move_list(Node *head, Node *new_list_head)
+{
+	//REMOVE NAMES ATTACHED TO NEW_LIST AND ADD THEM TO ORIGINAL LIST (HEAD)
+	Node *temp = head;
+	while(temp->next != NULL){
+	temp = temp->next;
+	}
+
+	temp->next = new_list_head->next;
+	new_list_head->next=NULL;
+}
+
+void make_list_zero(Node *head)
+{
+	//DELETE ALL NAMES OF LIST OF A TILE WHEN TILE BECOMES ZERO
+	head->next=NULL;
+}
+
+void printList(Node* head)
+{
+	//PRINT LINKED LIST
+	Node* node=head->next;
+	while (node != NULL) {
+		printf(" %s ", node->var_name);
+		node = node->next;
+	}
+	printf("\n");
+}
+
+void name_variable(char varname[50], int row, int col)
+{
+	//FOR VAR <<varname>> IS <<x>>,<<y>>.
+	insert_name(board_names[row-1][col-1], varname);
+
 }

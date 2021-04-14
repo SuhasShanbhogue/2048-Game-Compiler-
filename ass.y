@@ -63,7 +63,9 @@ ASSIGNMENT : ASSIGN INTVALUE TO INTVALUE COMMA INTVALUE {printf("%d,%d,%d\n",$2,
 	;
 
 
-NAMING : VAR VARNAME IS INTVALUE COMMA INTVALUE {printf("%s,%d,%d",$2,$4,$6);}
+NAMING : VAR VARNAME IS INTVALUE COMMA INTVALUE {printf("%s,%d,%d\n",$2,$4,$6);
+												name_variable($2, $4, $6);
+												}
 	;
 
 QUERY : VALUE IN INTVALUE COMMA INTVALUE {printf("%d,%d\n",$3,$5);
