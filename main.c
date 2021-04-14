@@ -337,4 +337,3 @@ void name_variable(char varname[50], int row, int col)
 	insert_name(board_names[row-1][col-1], varname);
 
 }
-
