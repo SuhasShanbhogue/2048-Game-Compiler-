@@ -143,7 +143,7 @@ void moveLeft(int insertRandom, int operation){
 					// temp2[temp2Idx] = temp[k]*2;
 					if(operation == 1){	temp2[temp2Idx] = temp[k]*2; }
 					else if(operation == 2){ temp2[temp2Idx] = 0; }
-					else if(operation == 3){ temp2[temp2Idx]  *= temp2[temp2Idx];}
+					else if(operation == 3){ temp2[temp2Idx]  = temp[k]*temp[k];}
 					else{temp2[temp2Idx] = 1;}
 					k++;	temp2Idx++;
 				}
@@ -228,6 +228,7 @@ void rotate90(){
     }
 }
 
+
 void rotateNodes90(){
 	int i,j;
 	for (i = 0; i < 2; i++) {
@@ -310,3 +311,4 @@ void name_variable(char varname[50], int row, int col)
 	insert_name(board_names[row-1][col-1], varname);
 
 }
+
