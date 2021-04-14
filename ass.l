@@ -15,10 +15,12 @@
 \n		{return NEWLINE;}
 \.	{return FULLSTOP;}
 "ADD"	{yylval.iint = 1; return ADD;}
+[aA][dD][dD] { return ERR; }
 "SUBTRACT"	{yylval.iint = 2 ;return SUB;}
 "MULTIPLY"	{yylval.iint = 3 ; return MUL;}
 "DIVIDE"	{yylval.iint = 4; return DIV;}
 "LEFT"	{yylval.iint = 5; return LEFT;}
+[lL][eE][fF][tT] { return ERR; }
 "RIGHT" {yylval.iint = 6; return RIGHT;}
 "UP"	{yylval.iint = 7; return UP;}
 "DOWN" {yylval.iint = 8; return DOWN;}
@@ -33,7 +35,6 @@
 "exit"		{return QUIT;}
 "quit"		{return QUIT;}
 [a-zA-Z][a-zA-Z0-9]* {strcpy(yylval.str,yytext); return VARNAME;}
-
 
 
 %%

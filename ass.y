@@ -18,7 +18,7 @@ void yyerror(const char* s);
 	int iint;
 }
 %token<iint> ADD LEFT RIGHT UP DOWN  SUB MUL DIV 
-%token<iint> COMMA NEWLINE QUIT ASSIGN TO VALUE IN IS VAR FULLSTOP
+%token<iint> COMMA NEWLINE QUIT ASSIGN TO VALUE IN IS VAR FULLSTOP ERR
 %token<iint> INTVALUE 
 %token<str> VARNAME 
 %type<iint> MOVES ARITHMETIC DIRECTION
@@ -30,12 +30,18 @@ operation :operation MOVES NEWLINE
 	|operation ASSIGNMENT FULLSTOP NEWLINE
 	|operation NAMING FULLSTOP NEWLINE
 	|operation QUERY FULLSTOP NEWLINE
-	|NEWLINE
+	|operation NEWLINE
+	|Error NEWLINE {printf("Syntax Error!");}
 	|
 
 
 
 	;
+
+Error : Error ERR
+	  |	ERR
+
+	  ;
 
 MOVES : ARITHMETIC DIRECTION FULLSTOP{printf("%d,%d\n",$1,$2);
 								move(1, $2, $1);
