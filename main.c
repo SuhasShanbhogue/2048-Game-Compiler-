@@ -336,6 +336,11 @@ void printList(Node* head)
 void name_variable(char varname[50], int row, int col)
 {
 	//FOR VAR <<varname>> IS <<x>>,<<y>>.
+	if((board.board)[row-1][col-1]==0)
+	{
+		printf("Sorry, cannot assign a variable name to a zero tile!\n");
+		return;
+	}
 	insert_name((board_names.board_names)[row-1][col-1], varname);
 
 }
