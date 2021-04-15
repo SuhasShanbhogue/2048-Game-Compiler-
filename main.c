@@ -24,6 +24,16 @@ void insertRandomCell();
 	
 void rotate90();
 
+// New additions
+
+int checkStateChangeForMove(int direction, int operation);	
+
+struct Board moveState(int insertRandom, int direction, int operation, struct Board temp);
+
+struct Board moveLeftState(int insertRandom, int operation, struct Board temp);
+
+struct Board rotate90State(struct Board temp);
+
 int main() {
 	yyin = stdin;
 	initialize();
@@ -342,4 +352,125 @@ void name_variable(char varname[50], int row, int col)
 	}
 	insert_name((board_names.board_names)[row-1][col-1], varname);
 
+}
+
+// New additions
+
+int checkStateChangeForMove(int direction, int operation){
+	struct Board temp;
+	for(int i=0; i<4; i++){
+		for(int j=0; j<4; j++){
+			(temp.board)[i][j] = (board.board)[i][j];
+		}
+	}
+	struct Board temp1 = moveState(0, direction, operation, temp);
+
+	int changed = 0;
+
+	for(int i=0; i<4; i++){
+		for(int j=0; j<4; j++){
+			if((board.board)[i][j] != (temp1.board)[i][j]){
+				changed = 1;
+			}
+		}
+	}
+
+	return changed;	// Returns 1 if the state was changed due to the move
+}
+
+struct Board moveState(int insertRandom, int direction, int operation, struct Board temp){
+	if(direction == 5){
+		temp = moveLeftState(insertRandom, operation, temp);
+	}
+	else if(direction == 6){
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+		temp = moveLeftState(insertRandom, operation, temp);
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+	}
+	else if(direction == 7){
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+		temp = moveLeftState(insertRandom, operation, temp);
+		temp = rotate90State(temp);
+	}
+	else if(direction == 8){
+		temp = rotate90State(temp);
+		temp = moveLeftState(insertRandom, operation, temp);
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+		temp = rotate90State(temp);
+	}
+	return temp;
+}
+
+struct Board moveLeftState(int insertRandom, int operation, struct Board tempboard){
+	int i,j;
+	for(i=0; i<4; i++){
+		int temp[4];
+		int tempIdx=0;
+		for(j=0; j<4; j++){
+			if((tempboard.board)[i][j] != 0){
+				temp[tempIdx] = (tempboard.board)[i][j];
+				tempIdx++;
+			}
+		}
+		int temp2[4];
+		int temp2Idx = 0;
+		int k = 0;
+		while(k < tempIdx){
+			if(k < tempIdx - 1){
+				if(temp[k] == temp[k+1]){
+					if(operation == 1)		{	temp2[temp2Idx] = temp[k]*2; 
+										}
+					else if(operation == 2)	{ 	temp2[temp2Idx] = -7; 
+										}
+					else if(operation == 3)	{ 	temp2[temp2Idx]  = temp[k]*temp[k];
+										}
+					else					{	temp2[temp2Idx] = 1;
+										}
+					k++;	temp2Idx++;
+				}
+				else{
+					temp2[temp2Idx] = temp[k];
+					temp2Idx++;
+				}
+			}
+			else{
+				temp2[temp2Idx] = temp[k];
+				temp2Idx++;
+			}
+			k++;
+		}
+
+		for(k=0; k<4; k++){
+			if(k < temp2Idx){
+				(tempboard.board)[i][k] = temp2[k];
+			}
+			else{
+				(tempboard.board)[i][k] = 0;
+			}
+		}
+
+	}
+	return tempboard;
+}
+
+struct Board rotate90State(struct Board tempboard){
+	int i,j;
+	for (i = 0; i < 2; i++) {
+        for (j = i; j < 3 - i; j++) {
+ 
+            // Swap elements of each cycle
+            // in clockwise direction
+            int temp = (tempboard.board)[i][j];
+            (tempboard.board)[i][j] = (tempboard.board)[4 - 1 - j][i];
+            (tempboard.board)[4 - 1 - j][i] = (tempboard.board)[4 - 1 - i][4 - 1 - j];
+            (tempboard.board)[4 - 1 - i][4 - 1 - j] = (tempboard.board)[j][4 - 1 - i];
+            (tempboard.board)[j][4 - 1 - i] = temp;
+        }
+    }
+    return tempboard;
 }

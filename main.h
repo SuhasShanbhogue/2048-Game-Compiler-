@@ -24,6 +24,11 @@ extern void make_list_zero(Node *head);
 extern void printList(Node* head);
 extern void name_variable(char varname[50], int row, int col);
 
+extern int checkStateChangeForMove(int direction, int operation);	
+extern struct Board moveState(int insertRandom, int direction, int operation, struct Board temp);
+extern struct Board moveLeftState(int insertRandom, int operation, struct Board temp);
+extern struct Board rotate90State(struct Board temp);
+
 struct Board{
 	int board[4][4];
 };

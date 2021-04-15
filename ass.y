@@ -70,10 +70,17 @@ MOVESPROBLEM1 : ARITHMETIC DIRECTION{
 }
 
 MOVES : ARITHMETIC DIRECTION FULLSTOP{
-								move(1, $2, $1);
-								printBoard();
-								printf("2048-shell> ");
+								int a = checkStateChangeForMove($2, $1);
+								if(a == 1){
+									move(1, $2, $1);
+									printBoard();
+									printf("2048-shell> ");
 								}
+								else{
+									printf("This move doesn't do anything!\n");
+									printf("2048-shell> ");	
+								}
+							}
 
 	;
 
