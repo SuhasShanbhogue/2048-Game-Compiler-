@@ -40,15 +40,15 @@ operation :operation MOVES NEWLINE
 	|operation SMALLCAPS1 NEWLINE
 	|operation SMALLCAPS2 NEWLINE
 	|operation SMALLCAPS3 NEWLINE
-	|operation ERR NEWLINE {yyerrok;}
+	|operation error NEWLINE {yyerrok;}
+	|operation error FULLSTOP NEWLINE
 	|NEWLINE
 	|
 
 
 
 	;
-ERR : ERR error 
-	| error
+
 
 SMALLCAPS1 : VARNAME DIRECTION FULLSTOP{
 	fprintf(stderr, RED "Please make sure that the arithmetic operation is written in capitals and is one of : \nADD\nSUBTRACT\nMULTIPLY\nDIVIDE\n" NC);
@@ -129,6 +129,7 @@ QUERY : VALUE IN INTVALUE COMMA INTVALUE FULLSTOP {
 
 
 void yyerror(const char* s) {
-	fprintf(stderr, "Parse error: %s\n", "");
+	fprintf(stderr, "-1\n");
+	printf("Syntax Error!\n");
 	printf("2048-shell> ");
 }
