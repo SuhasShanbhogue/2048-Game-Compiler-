@@ -468,8 +468,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    35,    35,    36,    37,    38,    39,    40,    41,    42,
-      43,    44,    50,    55,    60,    67,    72,    87,    88,    89,
-      90,    93,    94,    95,    96,   101,   109,   116
+      43,    44,    50,    55,    60,    67,    72,    88,    89,    90,
+      91,    94,    95,    96,    97,   102,   110,   117
 };
 #endif
 
@@ -1315,95 +1315,96 @@ yyreduce:
 									move(1, (yyvsp[-1].iint), (yyvsp[-2].iint));
 									printBoard();
 									printf("2048-shell> ");
+									fprintCurrentState();
 								}
 								else{
 									printf("This move doesn't do anything!\n");
 									printf("2048-shell> ");	
 								}
 							}
-#line 1325 "ass.tab.c" /* yacc.c:1646  */
+#line 1326 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 87 "ass.y" /* yacc.c:1646  */
+#line 88 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1331 "ass.tab.c" /* yacc.c:1646  */
+#line 1332 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 88 "ass.y" /* yacc.c:1646  */
+#line 89 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1337 "ass.tab.c" /* yacc.c:1646  */
+#line 1338 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 89 "ass.y" /* yacc.c:1646  */
+#line 90 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1343 "ass.tab.c" /* yacc.c:1646  */
+#line 1344 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 90 "ass.y" /* yacc.c:1646  */
+#line 91 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1349 "ass.tab.c" /* yacc.c:1646  */
+#line 1350 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 93 "ass.y" /* yacc.c:1646  */
+#line 94 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1355 "ass.tab.c" /* yacc.c:1646  */
+#line 1356 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 94 "ass.y" /* yacc.c:1646  */
+#line 95 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1361 "ass.tab.c" /* yacc.c:1646  */
+#line 1362 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 95 "ass.y" /* yacc.c:1646  */
+#line 96 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1367 "ass.tab.c" /* yacc.c:1646  */
+#line 1368 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 96 "ass.y" /* yacc.c:1646  */
+#line 97 "ass.y" /* yacc.c:1646  */
     {(yyval.iint) = (yyvsp[0].iint);}
-#line 1373 "ass.tab.c" /* yacc.c:1646  */
+#line 1374 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 101 "ass.y" /* yacc.c:1646  */
+#line 102 "ass.y" /* yacc.c:1646  */
     {
 														assign_value((yyvsp[-5].iint), (yyvsp[-3].iint), (yyvsp[-1].iint));
 														printBoard();
 														printf("2048-shell> ");
 														}
-#line 1383 "ass.tab.c" /* yacc.c:1646  */
+#line 1384 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 109 "ass.y" /* yacc.c:1646  */
+#line 110 "ass.y" /* yacc.c:1646  */
     {
 												name_variable((yyvsp[-5].str), (yyvsp[-3].iint), (yyvsp[-1].iint));
 												printBoard();
 												printf("2048-shell> ");
 												}
-#line 1393 "ass.tab.c" /* yacc.c:1646  */
+#line 1394 "ass.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 116 "ass.y" /* yacc.c:1646  */
+#line 117 "ass.y" /* yacc.c:1646  */
     {
 											value_in((yyvsp[-3].iint), (yyvsp[-1].iint));
 											printBoard();
 											printf("2048-shell> ");
 											}
-#line 1403 "ass.tab.c" /* yacc.c:1646  */
+#line 1404 "ass.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1407 "ass.tab.c" /* yacc.c:1646  */
+#line 1408 "ass.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1631,7 +1632,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 122 "ass.y" /* yacc.c:1906  */
+#line 123 "ass.y" /* yacc.c:1906  */
 
 
 

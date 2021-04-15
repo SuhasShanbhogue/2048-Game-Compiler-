@@ -41,6 +41,7 @@ int main() {
 	moveLeft(1, 1);
 	
 	printBoard();
+	fprintCurrentState();
 	do {
 		printf("2048-shell> ");
 		yyparse();
@@ -80,8 +81,8 @@ void printBoard(){
 void value_in(int row, int col)
 {
 	printf("Number in %d, %d is: %d\n", row, col, board.board[row-1][col-1]);
-	printf("names of %d, %d are:\n", row, col);
-	printList((board_names.board_names)[row-1][col-1]);
+	// printf("names of %d, %d are:\n", row, col);
+	// printList((board_names.board_names)[row-1][col-1]);
 }
 
 void assign_value(int val, int row, int col)
@@ -89,9 +90,20 @@ void assign_value(int val, int row, int col)
 	if(row>4 || col>4 || row<1 || col <1)
 	{
 		printf("There is no tile like that. The tile co-ordinates must be in the range 1,2,3,4.\n");
+		fprintf(stderr,"-1\n");
 		return;
 	}
-	board.board[row-1][col-1]=val;
+	if(val==(board.board)[row-1][col-1])
+	{
+		return;
+	}
+	(board.board)[row-1][col-1]=val;
+	if(val==0)
+	{
+		make_list_zero((board_names.board_names)[row-1][col-1]);
+	}
+	fprintCurrentState();
+
 }
 
 void move(int insertRandom, int direction, int operation){
@@ -335,25 +347,92 @@ void printList(Node* head)
 {
 	//PRINT LINKED LIST
 	Node* node=head->next;
-	while (node != NULL) {
-		printf(" %s ", node->var_name);
-		node = node->next;
+	if(node==NULL)
+	{
+		return;
 	}
-	printf("\n");
+	while (node != NULL) {
+		fprintf(stderr,"%s", node->var_name);
+		node = node->next;
+		if(node!=NULL)
+		{
+			fprintf(stderr, ",");
+		}
+	}
+	fprintf(stderr," ");
 }
 
-void name_variable(char varname[50], int row, int col)
+void name_variable(char varname[50], int row, int col) //modified this for variable issue
 {
 	//FOR VAR <<varname>> IS <<x>>,<<y>>.
 	if((board.board)[row-1][col-1]==0)
 	{
 		printf("Sorry, cannot assign a variable name to a zero tile!\n");
+		fprintf(stderr,"-1\n");
 		return;
 	}
+	for(int i=0; i<4;i++)
+	{
+		for(int j=0;j<4;j++)
+		{
+			if(findInList(varname , (board_names.board_names)[i][j])==1)
+			{
+				if((i==row-1)&&(j==col-1))
+				{
+					return;
+				}
+				printf("Sorry, variable name %s already exists. Please try another name.\n", varname);
+				fprintf(stderr,"-1\n");
+				return;
+
+			}
+		}
+	}
 	insert_name((board_names.board_names)[row-1][col-1], varname);
+	fprintCurrentState();
 
 }
 
+int findInList(char myvar[], Node* head) //newly added for variable issue
+{
+	Node* temp=head;
+	while(temp!=NULL)
+	{
+		if(strcmp(temp->var_name , myvar)==0)
+		{
+			return 1;
+		}
+		temp=temp->next;
+	}
+	return 0;
+}
+
+void fprintCurrentState()
+{
+	//PRINTS BOARD
+	for(int i=0;i<4;i++)
+	{
+		for(int j=0;j<4;j++)
+		{
+			fprintf(stderr, "%d ",(board.board)[i][j]);
+		}
+	}
+
+	//PRINTS VARIABLE NAMES
+	for(int i=0;i<4;i++)
+	{
+		for(int j=0;j<4;j++)
+		{
+			if(((board_names.board_names)[i][j])->next!=NULL)
+			{
+				fprintf(stderr, "%d,%d", i+1,j+1);
+			}
+			printList((board_names.board_names)[i][j]);
+		}
+	}
+	fprintf(stderr, "\n");
+	
+}
 // New additions
 
 int checkStateChangeForMove(int direction, int operation){

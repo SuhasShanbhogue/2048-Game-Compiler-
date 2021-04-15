@@ -75,6 +75,7 @@ MOVES : ARITHMETIC DIRECTION FULLSTOP{
 									move(1, $2, $1);
 									printBoard();
 									printf("2048-shell> ");
+									fprintCurrentState();
 								}
 								else{
 									printf("This move doesn't do anything!\n");

@@ -23,6 +23,8 @@ extern void move_list(Node *head, Node *new_list_head);
 extern void make_list_zero(Node *head);
 extern void printList(Node* head);
 extern void name_variable(char varname[50], int row, int col);
+extern int findInList(char myvar[], Node* head);
+extern void fprintCurrentState();
 
 extern int checkStateChangeForMove(int direction, int operation);	
 extern struct Board moveState(int insertRandom, int direction, int operation, struct Board temp);
