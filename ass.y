@@ -40,12 +40,15 @@ operation :operation MOVES NEWLINE
 	|operation SMALLCAPS1 NEWLINE
 	|operation SMALLCAPS2 NEWLINE
 	|operation SMALLCAPS3 NEWLINE
+	|operation ERR NEWLINE {yyerrok;}
 	|NEWLINE
 	|
 
 
 
 	;
+ERR : ERR error 
+	| error
 
 SMALLCAPS1 : VARNAME DIRECTION FULLSTOP{
 	fprintf(stderr, RED "Please make sure that the arithmetic operation is written in capitals and is one of : \nADD\nSUBTRACT\nMULTIPLY\nDIVIDE\n" NC);
